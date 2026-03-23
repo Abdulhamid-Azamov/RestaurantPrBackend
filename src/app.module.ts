@@ -7,6 +7,7 @@ import { CategoryModule } from './category/category.module';
 import { MenuModule } from './menu/menu.module';
 import { NewsModule } from './news/news.module';
 import { GalleryModule } from './galery/galery.module';
+import { TeamModule } from './team/team.module';
 
 @Module({
   imports: [
@@ -21,7 +22,8 @@ import { GalleryModule } from './galery/galery.module';
     CategoryModule,
     MenuModule,
     NewsModule,
-    GalleryModule
+    GalleryModule,
+    TeamModule
   ],
 })
 export class AppModule { }
