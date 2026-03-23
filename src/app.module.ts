@@ -8,6 +8,8 @@ import { MenuModule } from './menu/menu.module';
 import { NewsModule } from './news/news.module';
 import { GalleryModule } from './galery/galery.module';
 import { TeamModule } from './team/team.module';
+import { ReservationsModule } from './reservation/reservation.module';
+
 
 @Module({
   imports: [
@@ -23,7 +25,8 @@ import { TeamModule } from './team/team.module';
     MenuModule,
     NewsModule,
     GalleryModule,
-    TeamModule
+    TeamModule,
+    ReservationsModule, // ✅ QO'SHILDI
   ],
 })
 export class AppModule { }
