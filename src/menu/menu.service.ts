@@ -63,6 +63,17 @@ export class MenuService {
         return successRes(menu)
     }
 
+    async findByCategory(categoryId: string, excludeId: string) {
+        const menus = await this.menuRepository.find({
+            where: { category: { id: categoryId } },
+            relations: ['category']
+        })
+        return successRes(
+            menus.filter(menu => menu.id !== excludeId),
+            "O'xshash taomlar"
+        )
+    }
+
     async delete(id: string) {
         const menu = await this.menuRepository.findOne({
             where: { id }

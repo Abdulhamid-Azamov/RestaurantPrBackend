@@ -20,7 +20,10 @@ export class ReservationsService {
   constructor(
     @InjectRepository(Reservation)
     private readonly reservationRepo: Repository<Reservation>,
-  ) {}
+  ) {
+    console.log('MAIL_USER:', process.env.MAIL_USER)
+    console.log('MAIL_PASS:', process.env.MAIL_PASS)
+  }
 
   async create(dto: CreateReservationDto): Promise<Reservation> {
     const existing = await this.reservationRepo.findOne({
@@ -36,7 +39,6 @@ export class ReservationsService {
     const reservation = this.reservationRepo.create(dto)
     const saved = await this.reservationRepo.save(reservation)
 
-    // Send confirmation email (non-blocking)
     this.sendConfirmationEmail(saved).catch((err) =>
       console.error('Email send failed:', err),
     )
@@ -47,13 +49,13 @@ export class ReservationsService {
   private async sendConfirmationEmail(reservation: Reservation): Promise<void> {
     await this.transporter.sendMail({
       from: `"FoodLove Restaurant" <${process.env.MAIL_USER}>`,
-      to: process.env.ADMIN_EMAIL,
+      to: [process.env.ADMIN_EMAIL!, reservation.email], // ✅
       subject: '🍽️ Новое бронирование стола',
       html: `
         <div style="font-family: sans-serif; max-width: 480px; margin: 0 auto; padding: 24px; border-radius: 12px; border: 1px solid #e5e7eb;">
           <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 16px;">Новое бронирование</h2>
           <table style="width: 100%; border-collapse: collapse;">
-            <tr><td style="padding: 8px 0; color: #6b7280;">📞 Телефон</td><td style="font-weight: 600;">${reservation.phone}</td></tr>
+            <tr><td style="padding: 8px 0; color: #6b7280;">📧 Email</td><td style="font-weight: 600;">${reservation.email}</td></tr>
             <tr><td style="padding: 8px 0; color: #6b7280;">👥 Гостей</td><td style="font-weight: 600;">${reservation.guests} человек</td></tr>
             <tr><td style="padding: 8px 0; color: #6b7280;">📅 Дата</td><td style="font-weight: 600;">${reservation.date}</td></tr>
             <tr><td style="padding: 8px 0; color: #6b7280;">🕐 Время</td><td style="font-weight: 600;">${reservation.time}</td></tr>

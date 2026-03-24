@@ -1,9 +1,8 @@
-import { IsString, IsInt, IsDateString, Min, Max, Matches } from 'class-validator'
+import { IsString, IsInt, IsDateString, IsEmail, Min, Max, Matches } from 'class-validator'
 
 export class CreateReservationDto {
-  @IsString()
-  @Matches(/^\+?[0-9]{9,13}$/, { message: 'Неверный формат номера телефона' })
-  phone: string
+  @IsEmail({}, { message: 'Неверный формат email' })
+  email: string
 
   @IsInt()
   @Min(1, { message: 'Минимум 1 человек' })
@@ -11,11 +10,11 @@ export class CreateReservationDto {
   guests: number
 
   @IsDateString()
-  date: string // "2025-12-31"
+  date: string
 
   @IsString()
   @Matches(/^([01]\d|2[0-3]):([0-5]\d)$/, { message: 'Неверный формат времени (HH:mm)' })
-  time: string // "19:30"
+  time: string
 
   @IsString()
   location: string

@@ -12,7 +12,7 @@ export class Reservation {
   id: string
 
   @Column()
-  phone: string
+  email: string
 
   @Column()
   guests: number
