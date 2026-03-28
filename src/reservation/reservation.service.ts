@@ -20,10 +20,7 @@ export class ReservationsService {
   constructor(
     @InjectRepository(Reservation)
     private readonly reservationRepo: Repository<Reservation>,
-  ) {
-    console.log('MAIL_USER:', process.env.MAIL_USER)
-    console.log('MAIL_PASS:', process.env.MAIL_PASS)
-  }
+  ) { }
 
   async create(dto: CreateReservationDto): Promise<Reservation> {
     const existing = await this.reservationRepo.findOne({

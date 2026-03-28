@@ -39,7 +39,7 @@ export class AuthService {
         const isValidPassword = await bcrypt.compare(loginDto.password, user.password)
 
         if (!isValidPassword) {
-            throw new UnauthorizedException('Username yoki parol noto\'g\'ri!')
+            throw new UnauthorizedException("Username yoki parol noto'g'ri")
         }
 
         const token = this.jwtService.sign({
