@@ -9,6 +9,8 @@ import { NewsModule } from './news/news.module';
 import { GalleryModule } from './galery/galery.module';
 import { TeamModule } from './team/team.module';
 import { ReservationsModule } from './reservation/reservation.module';
+import { UsersModule } from './users/users.module';
+import { StatsModule } from './stats/stats.module';
 
 
 @Module({
@@ -26,7 +28,9 @@ import { ReservationsModule } from './reservation/reservation.module';
     NewsModule,
     GalleryModule,
     TeamModule,
-    ReservationsModule, // ✅ QO'SHILDI
+    ReservationsModule,
+    UsersModule,
+    StatsModule,
   ],
 })
 export class AppModule { }

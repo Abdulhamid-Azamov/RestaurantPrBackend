@@ -5,6 +5,7 @@ import { Menu } from './menu.entity';
 import { Category } from '../category/category.entity';
 import { CreateMenuDto } from './dto/create-menu.dto';
 import { successRes } from 'src/utils/success-res';
+import { UpdateMenuDto } from './dto/update-menu.dto';
 
 @Injectable()
 export class MenuService {
@@ -72,6 +73,27 @@ export class MenuService {
             menus.filter(menu => menu.id !== excludeId),
             "O'xshash taomlar"
         )
+    }
+
+    async update(id: string, updateMenuDto: UpdateMenuDto) {
+        const menu = await this.menuRepository.findOne({
+            where: { id },
+            relations: ['category']
+        })
+
+        if (!menu) throw new NotFoundException("Taom topilmadi")
+
+        if (updateMenuDto.categoryId) {
+            const category = await this.categoryRepository.findOne({
+                where: { id: updateMenuDto.categoryId }
+            })
+            if (!category) throw new NotFoundException("Kategoriya topilmadi")
+            menu.category = category
+        }
+
+        Object.assign(menu, updateMenuDto)
+        await this.menuRepository.save(menu)
+        return successRes(menu, "Taom yangilandi")
     }
 
     async delete(id: string) {

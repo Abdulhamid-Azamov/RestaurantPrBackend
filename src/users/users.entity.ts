@@ -1,10 +1,10 @@
-import bcrypt from "node_modules/bcryptjs";
+import * as bcrypt from "bcryptjs";
 import { BeforeInsert, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('users')
 export class User {
     @PrimaryGeneratedColumn("uuid")
-    id: number;
+    id: string;
 
     @Column()
     firstname: string;
@@ -20,6 +20,9 @@ export class User {
 
     @Column()
     password: string;
+
+    @Column({ default: 'user' })
+    role: string;
 
     @CreateDateColumn()
     createdAt: Date;
